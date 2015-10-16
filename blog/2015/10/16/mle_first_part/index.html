@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>The CTR is a MLE &mdash; No More Than Quadratic</title>
+  <meta name="author" content="Marc-Antoine Giuliani">
+
+
+
+
+
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link href="/favicon.png" rel="icon">
+
+  <link href="/theme/css/main.css" media="screen, projection"
+        rel="stylesheet" type="text/css">
+
+  <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic"
+        rel="stylesheet" type="text/css">
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic"
+        rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <header role="banner"><hgroup>
+  <h1><a href="/">No More Than Quadratic</a></h1>
+</hgroup></header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+</ul>
+
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+
+<ul class="main-navigation">
+    <li><a href="/archives.html">Archives</a></li>
+    <li><a href="http://www.proba.jussieu.fr/perso.php?id=332">Home Page</a></li>
+      <li class="active">
+        <a href="/category/statistics.html">Statistics</a>
+      </li>
+</ul></nav>
+  <div id="main">
+    <div id="content">
+<div>
+  <article class="hentry" role="article">
+<header>
+      <h1 class="entry-title">The CTR is a MLE</h1>
+    <p class="meta">
+<time datetime="2015-10-16T00:00:00+02:00" pubdate>oct. 16, 2015</time>    </p>
+</header>
+
+  <div class="entry-content"><p>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Click-it-!">Click it !<a class="anchor-link" href="#Click-it-!">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This is the story of you wanting to make money (you bastard!). So you have an idea: set up a simple website on a fashionable subject (let's say <a href="http://www.warpedspeed.com/meet-the-unicorn-that-will-change-the-way-you-poo/?utm_content=inf_10_1185_2&ts_pid=2">unicorns pooping</a>) and put an ad on it. Then everytime one of your visitors clicks on the ad you get a dollar. So to get an idea of how much money you will make you need to:</p>
+<ul>
+<li>know how many visitors you will get during some period of time (a month for example),</li>
+<li>know the proportion of visitors who will click on the ad.</li>
+</ul>
+<p>The first point depends solely on the topic of your website (and with such a hot topic as ours you are doomed to succeed), but the second depends solely on the ad. How to get an idea of the quality of an ad?</p>
+<p>Since we are only interested in making money a natural way to measure it would be to measure how many people clicked on a given ad compared to how many people were showed the ad in total. This ratio goes by the beautiful name of Click Through Ratio (CTR):</p>
+$$ \text{CTR} = \frac{\text{# People who click on the ad}}{\text{# People who saw the ad}} $$<p>Read # as "Number of".</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The important thing to realize at this point is that the CTR is a <strong>random</strong> quantity. Indeed consider the following thought experiment: we setup $K$ copies (same content, same ad) of our website during a month, and each of those sites receives the same number of visitors. Then if at the end of the month we measure the CTR on each of those sites, we will get different values. To modelize this intrinsic randomness we need the notion of a Bernoulli random variable.</p>
+<p>A Bernoulli random variable $X$, with distribution $\mathit{B}(\theta)$, takes the value 1 with probability $\theta$ and the value 0 with probability $1 - \theta$. Usually the value 1 is interpreted as a success and 0 as a failure.</p>
+<p>When a visitor clicks on an ad we succeed, while when he does not we fail. So the behaviour of a visitor is well modelized by some Bernoulli random variable with a probability of success $\theta$ (we make the strong hypothesis that $\theta$ is the same for all visitors and so depends solely on the ad). The question now is: how to guess $\theta$? What is the relation of the CTR to this value $\theta$?</p>
+<p>To guess the value of $\theta$ we could imagine using only the characteristics of the ad (its colour, what it sells and so on), but we will settle for a much simpler strategy: run your website for a month, and record for each visitor, $X_i$, if he clicked ($X_i = 1$) or not ($X_i = 0$) on the ad. After a month we know how many visitors where shown the ad (say $N$) and if they clicked on it or not. Then we can compute the CTR as:</p>
+$$CTR = \frac{1}{N} \sum_{i = 1}^{N} X_i.$$
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can rephrase this computation (in a pretty pedantic way) by saying that the CTR is the empirical mean of independent observations (yes I just slipped in an idependent hypothesis, but it seems reasonable, furthermore it's my blog I do whatever I want) $\, X_1, \dots, X_N$ of a Bernoulli random variable $X \sim \mathit{B}(\theta)$. This framework allows us to simulate our preceding thought experiment, to illustrate the randomness of the CTR.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+
+<span class="n">K</span> <span class="o">=</span> <span class="mi">100</span> <span class="c"># number of copies of our website</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">1000</span> <span class="c"># number of visitors on each copy</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="mf">0.2</span> <span class="c"># true parameter of the Bernoulli distribution</span>
+
+<span class="n">visitation_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">K</span><span class="p">),</span> <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="o">-</span><span class="n">theta</span><span class="p">,</span> <span class="n">theta</span><span class="p">])</span> <span class="c"># Each column represents a copy of the site</span>
+<span class="n">CTR_results</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">visitation_matrix</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">CTR_results</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[ 0.181  0.208  0.193  0.181  0.204  0.203  0.172  0.203  0.199  0.201
+  0.202  0.208  0.211  0.196  0.19   0.192  0.208  0.185  0.212  0.2    0.202
+  0.195  0.222  0.191  0.19   0.201  0.186  0.193  0.224  0.198  0.173
+  0.213  0.193  0.212  0.22   0.212  0.177  0.19   0.182  0.198  0.209
+  0.192  0.215  0.22   0.2    0.219  0.2    0.187  0.2    0.195  0.202
+  0.21   0.21   0.181  0.204  0.217  0.203  0.187  0.198  0.191  0.2    0.204
+  0.202  0.187  0.22   0.215  0.184  0.194  0.19   0.214  0.195  0.2    0.204
+  0.189  0.179  0.198  0.233  0.186  0.222  0.219  0.192  0.192  0.198
+  0.186  0.208  0.193  0.182  0.228  0.211  0.197  0.201  0.192  0.195
+  0.201  0.194  0.183  0.198  0.189  0.198  0.192]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can see that the CTR on each copy may differ, even if the parameter $\theta$ is kept the same. To visualize this result we may for example plot the histogram of the values taken by the CTR.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="kn">as</span> <span class="nn">sb</span>
+
+<span class="n">sb</span><span class="o">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">CTR_results</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[2]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fa5e406f6d0&gt;</pre>
+</div>
+
+</div>
+
+<div class="output_area"><div class="prompt"></div>
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+ZwAAjPl/ur/009/7UOwAAAAASUVORK5CYII=
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We see that the CTR is indeed random, as a result of our modelization (but in accordance to our intuition), and spreads around the <strong>true</strong> parameter $\theta = 0.2$. So the CTR is an <strong>approximation</strong> of the parameter $\theta$, in statistics we rather speak of an <strong>estimator</strong> of $\theta$, and to guess $\theta$ our best bet may be to compute the CTR.</p>
+<p>Statistical theory provides many justifications of this claim (the simplest in that case would be the moment method), one of them being particularly central to the theory: the maximum likelihood approach. We will now quickly introduce this methodology, which will imply the use of the CTR as an estimator of $\theta$, and which will serve as a basis for further discussions.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="The-most-likely-$\theta$">The most likely $\theta$<a class="anchor-link" href="#The-most-likely-$\theta$">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The maximum likelihood approach can be traced back at least to <a href="https://en.wikipedia.org/wiki/Ronald_Fisher">Fisher</a>, the father of modern statistics. In our case the idea is particularly simple: suppose that we have observed $N$ visitors, and recorded for each of them if they clicked or not. We say that we have observed a realization $X_1 = x_1, \dots, X_N = x_N$, where $x_i = 1$ if the ith visitor clicked on the ad, $0$ if not, of the Bernoulli random variables $X_i$. So what is the probability of such a realization?</p>
+<p>Since we make the hypothesis that the different observations are independent it is pretty straightforward to compute this probability:
+$$\mathbb{P}_\theta (X_1 = x_1, \dots, X_N = x_N) = \prod_{i=1}^{i=N} \theta^{x_i} (1 - \theta)^{1 - x_i}.$$</p>
+<p>Here we write $\mathbb{P}_\theta$ to mean that the probability is computed in the case where the <strong>true</strong> parameter is $\theta$.</p>
+<p>In fact we can rewrite this in a much simpler way:
+$$\mathbb{P}_\theta (X_1 = x_1, \dots, X_N = x_N) = \theta^{\text{# of successes}} (1 - \theta)^{\text{# of failures}}.$$</p>
+<p>Ok now pause for a moment. Of course this probability depends on the actual observations $x_i$, but it depends also on the parameter $\theta$. In fact we could view it as a function of $\theta$. This function is called the likelihood function:
+$$\mathcal{L} (\theta \, | \, X_1 = x_1, \dots, X_N = x_N) = \prod_{i=1}^{i=N} \theta^{x_i} (1 - \theta)^{1 - x_i}.$$</p>
+<p>The idea of Fisher is then simple, we should chose the parameter $\theta$ such that the probability of observing the particular sequence $X_1 = x_1, \dots, X_N = x_N$ is maximal, i.e. the parameter $\theta$ for which $\mathcal{L} (\theta \, | \, X_1 = x_1, \dots, X_N = x_N)$ is maximal. Maximum likelihood estimation is nothing more!</p>
+<p>To illustrate the whole thing let us draw the graph of the likelihood function for a particular realization of $X_1, \dots, X_N$.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">N</span> <span class="o">=</span> <span class="mi">100</span> <span class="c"># number of visitors</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="mf">0.2</span> <span class="c"># true Bernoulli parameter</span>
+
+<span class="k">def</span> <span class="nf">likelihood</span><span class="p">():</span>
+    <span class="n">realization_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">N</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span> <span class="o">-</span> <span class="n">theta</span><span class="p">,</span> <span class="n">theta</span><span class="p">])</span>
+    <span class="n">nb_success</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">realization_vector</span><span class="p">)</span>
+    <span class="n">nb_failure</span> <span class="o">=</span> <span class="n">N</span> <span class="o">-</span> <span class="n">nb_success</span>
+    <span class="n">theta_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="n">prob_theta</span> <span class="o">=</span> <span class="p">(</span><span class="n">theta_grid</span> <span class="o">**</span> <span class="n">nb_success</span><span class="p">)</span> <span class="o">*</span> <span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">theta_grid</span><span class="p">)</span> <span class="o">**</span> <span class="n">nb_failure</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">theta_grid</span><span class="p">,</span> <span class="n">prob_theta</span><span class="p">)</span>
+    
+<span class="n">likelihood</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+43Q6rbvuukuPPPKIfvazn+mll17Sa6+95nKF9eXoP5vn8mdGReE7U8/njo6Ot3ysp6dH7e3tlXyb
+BW22vtrpdFp/+Zd/qc985jO68MIL3Six5s00xtu2bVNfX5/Wr1+vT33qU9qxY4fuvPNOt0qtaTON
+c2trqzo7O9XV1SWfz6cLLrhAr7/+ulul1qyZxnj37t1avny54vG4gsGgzj33XL388stulVqXjh7/
+ueReReE7U8/nZcuWKZ1O6+DBg8rn83riiSe0evXqSr7NgjZbX+0777xT11xzDWM7DzON8fve9z79
+6Ec/0gMPPKCvfe1rOuOMM3TDDTe4WW7NmmmcA4GAurq6tG/fvtLHTz75ZNdqrVWz/Zm8Z88eZbNZ
+SdLLL7/MsvM8HGtWW0nuVdxectOmTXr++edLPZ937NihaDSqtWvX6oUXXtBXvvIVSRN/iF177bWV
+fIsF73hjvHr1ap133nk6++yzS597+eWX6yMf+YiL1dammf53bHnzzTd144036r777nOx0to20zjv
+379fN9xwg4rFok499VTdeuutbpdbk2Ya4wceeEBbt26V3+/XO9/5Tn3uc59zu9yas337dt18883q
+7++X3+9XPB7Xn//5n6urq6ui3KO3MwAADqPDFQAADiN8AQBwGOELAIDDCF8AABxG+AIA4DDCFwAA
+hxG+AAA4jPAFAMBh/x/qDjiJeYQMUwAAAABJRU5ErkJggg==
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Ok we see that for that particular realization the maximum likelihood estimation of $\theta$ would be close to its true value 0.2. In fact it is easy to obtain a close analitycal form of this particular maximum likelihood estimator (MLE from now on). It is in fact often easier to work with the logarithm of the likelihood (independance of observations implies likelihoods with a product form, and the logarithm turns products into sums) and to obey the rule of optimization people we will rather talk of minimization (that is totally arbitrary), so that we will try to minimize the negative log-likelihood:
+$$\mathcal{l} (\theta \, | \, X_1 = x_1, \dots, X_N = x_N) = - \sum_{i = 1}^{N} x_i \log(\theta) + (1 - x_i) \log(1 - \theta).$$</p>
+<p>To minimize this expression we solve:</p>
+$$ \frac{\partial \mathcal{l}}{\partial \theta} = 0,$$<p>and check that we get indeed a minimum (by computing the second partial derivative).</p>
+<p>Proceeding in this manner we deduce the MLE $\hat{\theta}_{\text{MLE}}$:
+$$\hat{\theta}_{\text{MLE}} = \frac{1}{N} \sum_{i = 1}^{N} X_i.$$</p>
+<p>That's the CTR! It's one way to justify that the CTR is a good estimator of $\theta$: we showed in fact that the CTR is the MLE of $\theta$.</p>
+<p>There is a large body of litterature which proves that the MLE has a lot of good large sample (i.e. when $N$ grows to infinity) properties and we can do many things in this particular case (testing, confidence intervals, etc...).</p>
+<p>In a next post we will make the problem harder and introduce the Expectation Maximization algorithm.</p>
+
+</div>
+</div>
+</div></p></div>
+    <footer>
+<p class="meta">
+  <span class="byline author vcard">
+    Posted by <span class="fn">
+        Marc-Antoine Giuliani
+    </span>
+  </span>
+<time datetime="2015-10-16T00:00:00+02:00" pubdate>oct. 16, 2015</time>  <span class="categories">
+    <a class='category' href='/category/statistics.html'>Statistics</a>
+  </span>
+  <span class="categories">
+    <a class="category" href="/tag/mle.html">MLE</a>,    <a class="category" href="/tag/ctr.html">CTR</a>  </span>
+</p><div class="sharing">
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="/blog/2015/10/16/mle_first_part/" data-via="ma_giuliani" data-counturl="/blog/2015/10/16/mle_first_part/" >Tweet</a>
+</div>    </footer>
+  </article>
+
+</div>
+<aside class="sidebar">
+  <section>
+    <h1>Recent Posts</h1>
+    <ul id="recent_posts">
+      <li class="post">
+          <a href="/blog/2015/10/16/mle_first_part/">The CTR is a MLE</a>
+      </li>
+    </ul>
+  </section>
+  <section>
+      
+    <h1>Categories</h1>
+    <ul id="recent_posts">
+        <li><a href="/category/statistics.html">Statistics</a></li>
+    </ul>
+  </section>
+ 
+
+  <section>
+  <h1>Tags</h1>
+    <a href="/tag/ctr.html">CTR</a>,    <a href="/tag/mle.html">MLE</a>  </section>
+
+
+    <section>
+        <h1>Social</h1>
+        <ul>
+            <li><a href="https://github.com/marcantoinegiuliani" target="_blank">Github</a></li>
+            <li><a href="https://twitter.com/ma_giuliani" target="_blank">Twitter</a></li>
+        </ul>
+    </section>
+
+<section>
+    <a href="http://twitter.com/ma_giuliani" class="twitter-follow-button" data-show-count="true">Follow @ma_giuliani</a>
+</section>
+</aside>    </div>
+  </div>
+  <footer role="contentinfo"><p>
+    Copyright &copy;  2015  Marc-Antoine Giuliani &mdash;
+  <span class="credit">Powered by <a href="http://getpelican.com">Pelican</a></span>
+</p></footer>
+  <script src="/theme/js/modernizr-2.0.js"></script>
+  <script src="/theme/js/ender.js"></script>
+  <script src="/theme/js/octopress.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+</body>
+</html>
