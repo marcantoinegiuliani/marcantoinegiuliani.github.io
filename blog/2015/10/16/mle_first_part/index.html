@@ -269,13 +269,13 @@ jQuery(document).ready(function($) {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This is the story of you wanting to make money (you bastard!). So you have an idea: set up a simple website on a fashionable subject (let's say <a href="http://www.warpedspeed.com/meet-the-unicorn-that-will-change-the-way-you-poo/?utm_content=inf_10_1185_2&ts_pid=2">unicorns pooping</a>) and put an ad on it. Then everytime one of your visitors clicks on the ad you get a dollar. So to get an idea of how much money you will make you need to:</p>
+<p>This is the story of you wanting to make money (you greedy bastard!). So you have an idea: set up a simple website on a fashionable subject (let's say <a href="http://www.warpedspeed.com/meet-the-unicorn-that-will-change-the-way-you-poo/?utm_content=inf_10_1185_2&ts_pid=2">unicorns pooping</a>) and put an ad on it. Then everytime one of your visitors clicks on the ad you get a dollar. So to get an idea of how much money you will make you need to:</p>
 <ul>
 <li>know how many visitors you will get during some period of time (a month for example),</li>
 <li>know the proportion of visitors who will click on the ad.</li>
 </ul>
 <p>The first point depends solely on the topic of your website (and with such a hot topic as ours you are doomed to succeed), but the second depends solely on the ad. How to get an idea of the quality of an ad?</p>
-<p>Since we are only interested in making money a natural way to measure it would be to measure how many people clicked on a given ad compared to how many people were showed the ad in total. This ratio goes by the beautiful name of Click Through Ratio (CTR):</p>
+<p>Since we are only interested in making money, a natural way to measure it would be to measure how many people clicked on a given ad compared to how many people were showed the ad in total. This ratio goes by the beautiful name of Click Through Rate (CTR):</p>
 $$ \text{CTR} = \frac{\text{# People who click on the ad}}{\text{# People who saw the ad}} $$<p>Read # as "Number of".</p>
 
 </div>
@@ -299,7 +299,7 @@ $$CTR = \frac{1}{N} \sum_{i = 1}^{N} X_i.$$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We can rephrase this computation (in a pretty pedantic way) by saying that the CTR is the empirical mean of independent observations (yes I just slipped in an idependent hypothesis, but it seems reasonable, furthermore it's my blog I do whatever I want) $\, X_1, \dots, X_N$ of a Bernoulli random variable $X \sim \mathit{B}(\theta)$. This framework allows us to simulate our preceding thought experiment, to illustrate the randomness of the CTR.</p>
+<p>We can rephrase this computation (in a pretty pedantic way) by saying that the CTR is the empirical mean of independent observations (yes I just slipped in an idenpendent hypothesis, but it seems reasonable, furthermore it's my blog I do whatever I want) $\, X_1, \dots, X_N$ of a Bernoulli random variable $X \sim \mathit{B}(\theta)$. This framework allows us to simulate our preceding thought experiment, to illustrate the randomness of the CTR.</p>
 
 </div>
 </div>
@@ -536,13 +536,13 @@ ZwAAjPl/ur/009/7UOwAAAAASUVORK5CYII=
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The maximum likelihood approach can be traced back at least to <a href="https://en.wikipedia.org/wiki/Ronald_Fisher">Fisher</a>, the father of modern statistics. In our case the idea is particularly simple: suppose that we have observed $N$ visitors, and recorded for each of them if they clicked or not. We say that we have observed a realization $X_1 = x_1, \dots, X_N = x_N$, where $x_i = 1$ if the ith visitor clicked on the ad, $0$ if not, of the Bernoulli random variables $X_i$. So what is the probability of such a realization?</p>
-<p>Since we make the hypothesis that the different observations are independent it is pretty straightforward to compute this probability:
-$$\mathbb{P}_\theta (X_1 = x_1, \dots, X_N = x_N) = \prod_{i=1}^{i=N} \theta^{x_i} (1 - \theta)^{1 - x_i}.$$</p>
+<p>Since we make the hypothesis that the different observations are independent, it is pretty straightforward to compute this probability:
+$$\mathbb{P}_\theta (X_1 = x_1, \dots, X_N = x_N) = \prod_{i=1}^{i=N} \, \theta^{x_i} \, (1 - \theta)^{1 - x_i}.$$</p>
 <p>Here we write $\mathbb{P}_\theta$ to mean that the probability is computed in the case where the <strong>true</strong> parameter is $\theta$.</p>
 <p>In fact we can rewrite this in a much simpler way:
-$$\mathbb{P}_\theta (X_1 = x_1, \dots, X_N = x_N) = \theta^{\text{# of successes}} (1 - \theta)^{\text{# of failures}}.$$</p>
+$$\mathbb{P}_\theta (X_1 = x_1, \dots, X_N = x_N) = \, \theta^{\text{# of successes}} \, (1 - \theta)^{\text{# of failures}}.$$</p>
 <p>Ok now pause for a moment. Of course this probability depends on the actual observations $x_i$, but it depends also on the parameter $\theta$. In fact we could view it as a function of $\theta$. This function is called the likelihood function:
-$$\mathcal{L} (\theta \, | \, X_1 = x_1, \dots, X_N = x_N) = \prod_{i=1}^{i=N} \theta^{x_i} (1 - \theta)^{1 - x_i}.$$</p>
+$$\mathcal{L} (\theta \, | \, X_1 = x_1, \dots, X_N = x_N) = \prod_{i=1}^{i=N} \, \theta^{x_i} \, (1 - \theta)^{1 - x_i}.$$</p>
 <p>The idea of Fisher is then simple, we should chose the parameter $\theta$ such that the probability of observing the particular sequence $X_1 = x_1, \dots, X_N = x_N$ is maximal, i.e. the parameter $\theta$ for which $\mathcal{L} (\theta \, | \, X_1 = x_1, \dots, X_N = x_N)$ is maximal. Maximum likelihood estimation is nothing more!</p>
 <p>To illustrate the whole thing let us draw the graph of the likelihood function for a particular realization of $X_1, \dots, X_N$.</p>
 
@@ -782,7 +782,7 @@ hxG+AAA4jPAFAMBh/x/qDjiJeYQMUwAAAABJRU5ErkJggg==
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Ok we see that for that particular realization the maximum likelihood estimation of $\theta$ would be close to its true value 0.2. In fact it is easy to obtain a close analitycal form of this particular maximum likelihood estimator (MLE from now on). It is in fact often easier to work with the logarithm of the likelihood (independance of observations implies likelihoods with a product form, and the logarithm turns products into sums) and to obey the rule of optimization people we will rather talk of minimization (that is totally arbitrary), so that we will try to minimize the negative log-likelihood:
-$$\mathcal{l} (\theta \, | \, X_1 = x_1, \dots, X_N = x_N) = - \sum_{i = 1}^{N} x_i \log(\theta) + (1 - x_i) \log(1 - \theta).$$</p>
+$$\mathcal{l} (\theta \, | \, X_1 = x_1, \dots, X_N = x_N) = - \big\{ \sum_{i = 1}^{N} x_i \log(\theta) + (1 - x_i) \log(1 - \theta) \big\}.$$</p>
 <p>To minimize this expression we solve:</p>
 $$ \frac{\partial \mathcal{l}}{\partial \theta} = 0,$$<p>and check that we get indeed a minimum (by computing the second partial derivative).</p>
 <p>Proceeding in this manner we deduce the MLE $\hat{\theta}_{\text{MLE}}$:
